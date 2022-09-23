@@ -32,6 +32,25 @@ makes up an entire function is called the body of the function.
 
 int main()
 {
-    std::cout << "Game Over !\n";
+    /*
+    "std" tells the compiler that i want to use "cout" from the standard library
+    "std" is a namepace, namespace identifies the group to which something belongs
+
+    "::" is the scope operator, we use it to prefix a namespace like "std"
+    
+    "cout" (read as See-Out) is used to display the output to the standard output device i.e. monitor.
+    
+    we use the output operator "<<" to send the string to cout.
+    
+    "Game Over!" is a string — a series of printable characters.
+    is a string literal, meaning it’s literally the characters between the quotes.
+    
+    Finally, we use "endl", it is defined in iosteam and also is an object in the std namespace
+    Sending endl to the standard output acts like pressing the Enter key in the console window. 
+    In fact, if I were to send another string to the console window, it would appear on the
+    next line.
+    ";" tells the compiler that the statement ends here
+    */
+    std::cout << "Game Over !"<< std::endl; 
 }
 
