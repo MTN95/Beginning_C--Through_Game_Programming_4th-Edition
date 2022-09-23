@@ -51,6 +51,9 @@ int main()
     next line.
     ";" tells the compiler that the statement ends here
     */
-    std::cout << "Game Over !"<< std::endl; 
+    std::cout << "Game Over !" << std::endl; 
+    
+    // Type of the value returned by a function.
+    return 0;
 }
 
