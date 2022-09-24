@@ -52,7 +52,10 @@ int main()
     ";" tells the compiler that the statement ends here
     */
     std::cout << "Game Over !" << std::endl; 
-    
+
+    int x;
+    std::cin >> x;
+
     // Type of the value returned by a function.
     return 0;
 }
