@@ -59,6 +59,7 @@ int main()
 */
 
 // 3 - Computer Guess the number
+
 int main()
 {
     // seed random number generator based on the current time
@@ -93,5 +94,5 @@ int main()
             std::cout << "The Computer Guessed the Right Number in " << tries << " Guesses!\n";
         }
     } while (secretNumber != myNum);
-
+    return 0;
 }
