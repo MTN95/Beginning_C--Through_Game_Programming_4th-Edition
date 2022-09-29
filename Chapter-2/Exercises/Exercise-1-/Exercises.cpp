@@ -65,20 +65,19 @@ int main()
     // seed random number generator based on the current time
     srand(static_cast<unsigned int>(time(0)));
 
-    // Assigning secretNumber a random number between 1 - 100
-    int secretNumber = rand() % 100 + 1;
-
+    int secretNumber;
     int tries = 0;
     int myNum;
 
     std::cout << "\t\t\tWelcome to Computer's Guesses My Number !\n\n";
         
-    do
-    {   //giving secret number a random number every time we loop
-        secretNumber = rand() % 100 + 1;
+    std::cout << "Enter a number between 1-100 for the computer to guess: ";
+    std::cin >> myNum;
 
-        std::cout << "Enter a number between 1-100 for the computer to guess: ";
-        std::cin >> myNum;
+    do
+    {   
+    // Assigning secretNumber a random number between 1 - 100
+        secretNumber = rand() % 100 + 1;
         tries++;
         if (secretNumber > myNum)
         {
