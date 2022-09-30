@@ -10,6 +10,7 @@ int main()
 								  {' ','X','X'},
 								  {'X','O','O'} };
 
+	// Displaying The Board
 	std::cout << "Here's the tic tac toe board:\n";
 	for(int i = 0; i<ROWS; ++i)
 	{
@@ -20,9 +21,11 @@ int main()
 		std::cout << std::endl;
 	}
 
+	// Assigning X to the empty location
 	std::cout << "\n'X' moves to the empty location.\n\n";
 	board[1][0] = 'X';
 
+	// Displaying The Board After Changes
 	std::cout << "Now the tic tab toe board is:\n";
 	for (int i = 0; i < ROWS; ++i)
 	{
@@ -32,5 +35,6 @@ int main()
 		}
 		std::cout << std::endl;
 	}
+	std::cout << "X WINS!";
 	return 0;
 }
