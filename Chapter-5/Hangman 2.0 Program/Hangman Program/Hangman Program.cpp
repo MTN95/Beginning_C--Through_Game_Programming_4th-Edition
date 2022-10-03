@@ -30,42 +30,47 @@ congratz you have guess the right word !
 #include <ctime>
 #include <cctype>
 
+char getGuess();
+
+bool isGuessInSecret();
+
+char guess;
+
+int wrong = 0;
+
+// selecting the secret word to THE_WORD
+std::string THE_WORD;
+// letters already guesses
+std::string used = "";
 
 int main()
 {
-    
+
     // Max Wrong Guesses Allowed
     const int MAX_WRONG = 8;
-
-    // Collection of words to guess
     std::vector<std::string> words;
-    words.push_back("ELEVATOR");
-    words.push_back("CLOCK");
-    words.push_back("SHORE");
-    words.push_back("LINE");
-    words.push_back("SANE");
+    // Collection of words to guess
     words.push_back("HANG");
     words.push_back("MAN");
     words.push_back("GAME");
+    words.push_back("VERSION");
+    words.push_back("TWO");
 
     // seeding the random generator
     srand(static_cast<unsigned int>(time(0)));
     // shuffling the words
     random_shuffle(words.begin(), words.end());
 
-    // selecting the secret word to THE_WORD
-    const std::string THE_WORD = words[0];
+    THE_WORD = words[0];
+
     // num of incorrect guesses
-    int wrong = 0;
+    wrong = 0;
     // word guessed so far
     std::string soFar (THE_WORD.size(), '-');
-    // letters already guesses
-    std::string used = "";
     
 
     std::cout << "\nWelcome to Hangman. Good Luck!\n";
-    std::cout << "\nto quit the game write 'quit' and enter any time.\n";
-    std::string endGame;
+
         // while the player didn't use max guesses allowed, and didn't guess THE_WORD, keep looping
         while ((wrong < MAX_WRONG) && (soFar != THE_WORD))
         {
@@ -76,12 +81,7 @@ int main()
             std::cout << "\nSo far, the word is: " << soFar << "\n";
 
             // getting the player's guess
-            char guess;
-            std::cout << "enter you guess: ";
-            std::cin >> guess;
-            // toupper - to upper 
-            // secrets words are in uppercase
-            guess = toupper(guess);
+            guess = getGuess();
 
             while (used.find(guess) != std::string::npos)
             {
@@ -91,7 +91,8 @@ int main()
                 guess = toupper(guess);
             }
             used += guess;
-            if (THE_WORD.find(guess) != std::string::npos)
+            
+            if (isGuessInSecret())
             {
                 std::cout << "\nThats right! " << guess << " is in the word.\n";
 
@@ -108,8 +109,9 @@ int main()
             {
                 std::cout << "Sorry, " << guess << " isn't in the word.\n";
                 ++wrong;
-            }
+            }       
         }
+
         // shut down
         if (wrong == MAX_WRONG)
         {
@@ -125,8 +127,6 @@ int main()
     return 0;
 }
 
-/*
-
 char getGuess()
 {
 
@@ -138,5 +138,14 @@ char getGuess()
     return guess;
 }
 
-
-*/
+bool isGuessInSecret()
+{
+    if (THE_WORD.find(guess) != std::string::npos)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
