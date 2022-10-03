@@ -48,6 +48,7 @@ int main()
 
     // Max Wrong Guesses Allowed
     const int MAX_WRONG = 8;
+    // creating a vector container - hold string objects
     std::vector<std::string> words;
     // Collection of words to guess
     words.push_back("HANG");
