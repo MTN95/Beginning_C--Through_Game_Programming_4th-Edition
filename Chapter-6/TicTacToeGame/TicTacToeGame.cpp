@@ -187,8 +187,8 @@ char winner(const vector<char>& board)
                                      {0,3,6},
                                      {1,4,7},
                                      {2,5,8},
-                                     {0,4,8},
-                                     {2,4,6}  };
+									 {0,4,8},
+									 {2,4,6} };
 
     const int TOTAL_ROWS = 8;
     
@@ -217,6 +217,7 @@ char winner(const vector<char>& board)
     return NO_ONE;
 }
 
+// checks if the move is legal = if there is an empty space in where the player want to put his piece
 inline bool isLegal(int move, const vector<char>& board)
 {
     return (board[move] == EMPTY);
