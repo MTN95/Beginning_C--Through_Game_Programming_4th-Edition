@@ -17,6 +17,7 @@ public:
     void Play(int fun = 4);
 
     void printStats();
+    void Hint();
 private:
 
     int m_Hunger;
@@ -96,6 +97,36 @@ void Critter::printStats()
    cout << "Critter's boredom: " << m_Boredom << "\n";
 }
 
+void Critter::Hint()
+{
+    if (m_Hunger > 10)
+    {
+        cout << "I'm hungry! GIVE ME FOOD NOW HUMAN!\n";
+    }
+    else if (m_Hunger > 5)
+    {
+        cout << "Are you gonna feed me anytime soon ?\n";
+    }
+    else
+    {
+        cout << "I'm Full!\n";
+    }
+
+    if (m_Boredom > 10)
+    {
+        cout << "I'm BOREDDDDD! I WANT TO PLAY, Play with me hUmAN !!\n";
+    }
+    else if (m_Boredom > 5)
+    {
+        cout << "Can we play again pleaseee ? i'm still bored !\n";
+    }
+    else
+    {
+        cout << "i don't wanna play any more\n";
+    }
+
+}
+
 int main()
 {
     Critter crit;
@@ -122,6 +153,7 @@ int main()
         case 1:
             system("CLS");
             crit.Talk();
+            crit.Hint();
             break;
         case 2:
 			system("CLS");
