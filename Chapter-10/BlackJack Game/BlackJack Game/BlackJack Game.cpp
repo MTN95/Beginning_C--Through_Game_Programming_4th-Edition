@@ -81,7 +81,7 @@ public:
     int GetTotal() const;
 
 protected:
-
+    // holds array of cards
     vector<Card*> m_Cards;
 };
 
@@ -360,11 +360,197 @@ void Deck::AdditionalCards(GenericPlayer& aGenericPlayer)
     while (!(aGenericPlayer.IsBusted()) && (aGenericPlayer.IsHitting()))
     {
         Deal(aGenericPlayer);
-        cout << aGenericPlayer << "\n";
+        cout << aGenericPlayer << endl;
         
         if (aGenericPlayer.IsBusted())
         {
             aGenericPlayer.Bust();
         }
     }
+}
+
+class Game
+{
+public:
+    Game(const vector<string>& names);
+
+    ~Game();
+    
+    // plays the game of blackjack
+    void Play();
+
+private:
+
+    Deck m_Deck;
+
+    House m_House;
+
+    vector<Player> m_Players;
+};
+
+Game::Game(const vector<string>& names)
+{
+    // create a vector of players from a vector of names
+    vector<string>::const_iterator pName;
+    for (pName = names.begin(); pName != names.end(); ++pName)
+    {
+        m_Players.push_back(Player(*pName)); 
+    }
+
+    // seed the random number generator
+    srand(static_cast<unsigned int>(time(0)));
+    m_Deck.Populate();
+    m_Deck.Shuffle();
+}
+
+Game::~Game()
+{}
+
+void Game::Play()
+{
+    // deal initial 2 cards to everyone
+    vector<Player>::iterator pPlayer;
+    for (int i = 0; i < 2; ++i)
+    {
+        for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer)
+        {
+            m_Deck.Deal(*pPlayer);
+        }
+        m_Deck.Deal(m_House);
+    }
+
+    // hide house's first card
+    m_House.FlipFirstCard();
+
+    // display everyone's hand
+    for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer)
+    {
+        cout << *pPlayer << endl;
+    }
+
+    // reveal house's first card 
+    m_House.FlipFirstCard();
+    cout << endl << m_House;
+
+    // deal additional cards to house
+    m_Deck.AdditionalCards(m_House);
+
+    if (m_House.IsBusted())
+    {
+        // everyone still playing wins
+        for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer)
+        {
+            if ( !(pPlayer->IsBusted()) )
+            {
+                pPlayer->Win();
+            }
+        }
+    }
+    else
+    {
+        // compare each player still playing to house
+        for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer)
+        {
+            if ( !(pPlayer->GetTotal() > m_House.GetTotal()) )
+            {
+                pPlayer->Win();
+            }
+            else if (pPlayer->GetTotal() < m_House.GetTotal())
+            {
+                pPlayer->Lose();
+            }
+            else
+            {
+                pPlayer->Push();
+            }
+        }
+    }
+
+    // remove everyone's cards
+    for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer)
+    {
+        pPlayer->Clear();
+    }
+    m_House.Clear();
+
+}
+
+// function prototypes
+ostream& operator<<(ostream& os, const Card& aCard);
+ostream& operator<<(ostream& os, const GenericPlayer& aGenericPlayer);
+
+int main()
+{
+    cout << "\t\tWelcome to Blackjack!\n\n";
+
+    int numPlayers = 0;
+
+    while (numPlayers < 1 || numPlayers > 7)
+    {
+        cout << "How many players? (1 - 7): ";
+        cin >> numPlayers;
+    }
+
+    vector<string> names;
+    string name;
+    for (int i = 0; i<numPlayers; ++i)
+    {
+        cout << "Enter player name: ";
+        cin >> name;
+        names.push_back(name);
+    }
+    cout << endl;
+
+    // the game loop
+    Game aGame(names);
+    char again = 'y';
+    while (again != 'n' && again != 'N')
+    {
+        aGame.Play();
+        cout << "\nDo you want to play again (Y/N): ";
+        cin >> again;
+    }
+    return 0;
+}
+
+// overloads << operator so Card object can be sent to cout
+ostream& operator<<(ostream& os, const Card& aCard)
+{
+    const string RANKS[] = { "0", "A", "2", "3", "4", "5", "6", "7", "8", "9", "J", "Q", "K" };
+
+    const string SUITS[] = { "c", "d", "h", "s" };
+
+    if (aCard.m_IsFaceUp)
+    {
+        os << RANKS[aCard.m_Rank] << SUITS[aCard.m_Suit];
+    }
+    else
+    {
+        os << "XX";
+    }
+    return os;
+}
+
+// overloads << operator so a GenericPlayer object can be sent to cout
+ostream& operator<<(ostream& os, const GenericPlayer& aGenericPlayer)
+{
+    os << aGenericPlayer.m_Name << ":\t";
+
+    vector<Card*>::const_iterator pCard;
+    if (!aGenericPlayer.m_Cards.empty())
+    {
+        for (pCard = aGenericPlayer.m_Cards.begin(); pCard != aGenericPlayer.m_Cards.end(); ++pCard)
+        {
+            os << *(*pCard) << "\t";
+        }
+        if (aGenericPlayer.GetTotal() != 0)
+        {
+            cout << "(" << aGenericPlayer.GetTotal() << ")";
+        }
+    }
+    else
+    {
+        os << "<empty>";
+    }
+    return os;
 }
