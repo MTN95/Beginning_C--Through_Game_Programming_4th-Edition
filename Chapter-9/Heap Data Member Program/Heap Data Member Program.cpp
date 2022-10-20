@@ -47,13 +47,15 @@ Critter::Critter(const Critter& c)
 	m_Age = c.m_Age;
 }
 
-Critter& Critter::operator=(const Critter& c) // c is a constant reference to crit2.
+Critter& Critter::operator=(const Critter& c) // c is a constant reference to a Critter object
 {
 	cout << "Overloaded Assignment Operator called\n";
+	// checking to see if the object isn't being assigned to himself;
 	if (this != &c)
 	{
 		delete m_pName;
-		m_pName = new string(*(c.m_pName));
+		//crit1 = crit2
+		m_pName = new string(*(c.m_pName)); // copies, but creates new memory for it, instead of pointing to the same memory address
 		m_Age = c.m_Age;
 	}
 	return *this; // points to the object that was used to call the function
@@ -83,12 +85,14 @@ int main()
 	return 0;
 }
 
+// creating a new Critter object, constructor gets called automatically, after initializing, destructor is called 
 void testDestructor()
 {
 	Critter toDestroy("Rover", 3);
 	toDestroy.Greet();
 }
 
+// when passing Critter aCopy as a argument variable, the object is automatically gets copied, and copy constructor is called 
 void testCopyConstructor(Critter aCopy)
 {
 	aCopy.Greet();

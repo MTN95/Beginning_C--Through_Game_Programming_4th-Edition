@@ -34,7 +34,7 @@ int main()
 	/* "delete" do not directly affect the local variables
     pHeap and pHeap2. so we need to assign 0 to them. 
     so they don't point to some random memory location
-    or to assgin a valid memery address to it.
+    or to assign a valid memory address to it.
     */
     pHeap = 0;
     pHeap2 = 0;
