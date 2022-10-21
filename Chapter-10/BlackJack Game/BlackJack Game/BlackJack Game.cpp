@@ -343,8 +343,16 @@ void Deck::Deal(Hand & aHand)
 {
     if (!m_Cards.empty())
     {
-        aHand.Add(m_Cards.back());
-        m_Cards.pop_back();
+        if (m_Cards.size() == 14)
+        {
+            cout << "The number of cards is running low, repopulating deck.\n";
+            Deck::Populate();
+        }
+        else if (m_Cards.size() > 14)
+        {
+            aHand.Add(m_Cards.back());
+            m_Cards.pop_back();
+        }
     }
     else
     {

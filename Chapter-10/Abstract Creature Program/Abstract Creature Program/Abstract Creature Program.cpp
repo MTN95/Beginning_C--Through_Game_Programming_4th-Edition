@@ -42,6 +42,21 @@ void Orc::Greet() const
     cout << "The Orc says hello.\n";
 }
 
+class OrcBoss : public Orc
+{
+public:
+    OrcBoss(int health = 180);
+    virtual void Greet() const;
+};
+OrcBoss::OrcBoss(int health):
+    Orc(health)
+{}
+
+void OrcBoss::Greet() const
+{
+    cout << "The Orc Boss Growls hello.\n";
+}
+
 int main()
 {
  
@@ -50,6 +65,8 @@ int main()
     pCreature->Greet();
     pCreature->DisplayHealth();
     
-    
+    Orc* pOrc = new OrcBoss();
+    pOrc->Greet();
+    pOrc->DisplayHealth();
     return 0;
 }

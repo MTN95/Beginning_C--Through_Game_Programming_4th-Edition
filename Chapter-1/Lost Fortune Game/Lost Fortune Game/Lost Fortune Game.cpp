@@ -1,5 +1,5 @@
 // Lost Fortune Game
-// A Personalized Advanture 
+// A Personalized Adventure 
 
 #include <iostream>
 #include <string>
@@ -33,7 +33,7 @@ int main()
 
 	// tell the story
 	cout << "\nA brave group of " << adventurers << " adventurers set out on a quest ";
-	cout << ".. in search of the lost tresure of the Ancient Dwarves. ";
+	cout << ".. in search of the lost treasure of the Ancient Dwarves. ";
 	cout << "The group was led by that legendary rogue leader - " << leader << '\n';
 	cout << "\nAlong the way, a band of ogres ambushed the party. ";
 	cout << "\nAll fought bravely under the command of " << leader;
